@@ -1,5 +1,6 @@
 package com.example.memory.coolwheather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.memory.coolwheather.gson.Forecast;
 import com.example.memory.coolwheather.gson.Weather;
+import com.example.memory.coolwheather.service.AutoUpdateService;
 import com.example.memory.coolwheather.util.HttpUtil;
 import com.example.memory.coolwheather.util.Utility;
 
@@ -183,6 +185,9 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText("洗车指数："+weather.suggestion.carWash.info);
         sportText.setText("运动建议："+weather.suggestion.sport.info);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
+        
     }
 
     public void loadBingPic(){
