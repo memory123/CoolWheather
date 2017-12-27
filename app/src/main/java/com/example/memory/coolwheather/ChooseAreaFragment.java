@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.memory.coolwheather.db.City;
 import com.example.memory.coolwheather.db.County;
 import com.example.memory.coolwheather.db.Province;
+import com.example.memory.coolwheather.gson.Weather;
 import com.example.memory.coolwheather.util.HttpUtil;
 import com.example.memory.coolwheather.util.Utility;
 
@@ -82,11 +83,19 @@ public class ChooseAreaFragment extends Fragment {
                     queryConty();
                 }else if(currentLevel == LEVEL_COUNTY){
                     String weatherid = countyList.get(position).getWeatherId();
-                    Intent intent  = new Intent(getActivity(),WeatherActivity.class);
-                    intent.putExtra("weather_id",weatherid);
-                    Log.d("xxx",weatherid);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if (getActivity() instanceof MainActivity){
+                        Intent intent  = new Intent(getActivity(),WeatherActivity.class);
+                        intent.putExtra("weather_id",weatherid);
+                        Log.d("xxx",weatherid);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof WeatherActivity){
+                        WeatherActivity weatherActivity = (WeatherActivity) getActivity();
+                        weatherActivity.drawerLayout.closeDrawers();
+                        weatherActivity.swipeRefreshLayout.setRefreshing(true);
+                        weatherActivity.requestWeather(weatherid);
+                    }
+
                 }
             }
         });
