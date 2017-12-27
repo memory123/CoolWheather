@@ -1,10 +1,12 @@
 package com.example.memory.coolwheather;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +80,13 @@ public class ChooseAreaFragment extends Fragment {
                 }else if(currentLevel == LEVEL_CITY){
                     selectCity = cityList.get(position);
                     queryConty();
+                }else if(currentLevel == LEVEL_COUNTY){
+                    String weatherid = countyList.get(position).getWeatherId();
+                    Intent intent  = new Intent(getActivity(),WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherid);
+                    Log.d("xxx",weatherid);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
